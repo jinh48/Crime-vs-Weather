@@ -8,7 +8,7 @@
 
 </center>
 
-### Background and purpose:
+## Background and purpose:
 
 
 The link between crime and weather is almost ubiquitously agreed upon in the world of criminology *(see sources below)*. If the relationship between crime and weather is determined to a sufficient degree of accuracy, police resources can be allocated in a predictive manner throughout the year, saving time, taxpayer money, and possibly even lives. In Seattle, [a city with an extremely uneven distribution of crime](https://www.seattletimes.com/seattle-news/data/crime-rates-down-in-most-seattle-neighborhoods-but-theres-a-big-divide-between-north-and-south/), any predictions we can make about where and when to send police resources is valuable information.
@@ -24,7 +24,7 @@ The link between crime and weather is almost ubiquitously agreed upon in the wor
 
 * [ELLEN G. COHN; WEATHER AND CRIME, *The British Journal of Criminology*, Volume 30, Issue 1, 1 January 1990, Pages 51–64, https://doi.org/10.1093/oxfordjournals.bjc.a047980](https://academic.oup.com/bjc/article-abstract/30/1/51/523870)
 
-### Where the data comes from:
+## Where the data comes from:
 
 #### Road Weather Information Stations
 

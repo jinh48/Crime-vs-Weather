@@ -16,13 +16,13 @@ The link between crime and weather is almost ubiquitously agreed upon in the wor
 
 ##### Sources:
 
+* [ELLEN G. COHN; WEATHER AND CRIME, *The British Journal of Criminology*, Volume 30, Issue 1, 1 January 1990, Pages 51–64, https://doi.org/10.1093/oxfordjournals.bjc.a047980](https://academic.oup.com/bjc/article-abstract/30/1/51/523870)
+
 * [Nekeisha O. Spencer. (2017) Look what the hurricanes just blew in: analyzing the impact of the storm on criminal activities. *Journal of Crime and Justice* 40:4, pages 417-429.](https://www.tandfonline.com/doi/abs/10.1080/00779954.2011.572544)
 
 * [SIMON FIELD; THE EFFECT OF TEMPERATURE ON CRIME, *The British Journal of Criminology*, Volume 32, Issue 3, 1 July 1992, Pages 340–351, https://doi.org/10.1093/oxfordjournals.bjc.a048222](https://academic.oup.com/bjc/article-abstract/32/3/340/319313)
 
 * [Steven P. Lab, J. David Hirschel. (1988) “Clouding” the issues: The failure to recognize methodological problems. *Justice Quarterly* 5:2, pages 311-317.](https://www.tandfonline.com/doi/pdf/10.1080/07418828800089741)
-
-* [ELLEN G. COHN; WEATHER AND CRIME, *The British Journal of Criminology*, Volume 30, Issue 1, 1 January 1990, Pages 51–64, https://doi.org/10.1093/oxfordjournals.bjc.a047980](https://academic.oup.com/bjc/article-abstract/30/1/51/523870)
 
 ## Where the data comes from:
 

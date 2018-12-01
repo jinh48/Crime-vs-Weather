@@ -1,10 +1,6 @@
 library(dplyr)
-library("RSocrata")
 
 # ---- WEATHER DATA ----
-source("keys.R")
-
-
 
 
 # ---- CRIME DATA ----

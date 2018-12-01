@@ -1,7 +1,7 @@
 library(dplyr)
 library("RSocrata")
 
-# ---- WEATHER ----
+# ---- WEATHER DATA ----
 source("keys.R")
 
 

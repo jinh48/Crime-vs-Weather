@@ -1,7 +1,10 @@
 <center>
 # Crime VS Weather
+
 ### Info 201 Final Project
+
 ##### Rachel Kisela, Jin Ning Huang, Nikolai Liang
+
 </center>
 
 ### Background and purpose:

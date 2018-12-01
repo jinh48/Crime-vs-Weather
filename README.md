@@ -14,7 +14,9 @@
 The link between crime and weather is almost ubiquitously agreed upon in the world of criminology *(see sources below)*. If the relationship between crime and weather is determined to a sufficient degree of accuracy, police resources can be allocated in a predictive manner throughout the year, saving time, taxpayer money, and possibly even lives. In Seattle, [a city with an extremely uneven distribution of crime](https://www.seattletimes.com/seattle-news/data/crime-rates-down-in-most-seattle-neighborhoods-but-theres-a-big-divide-between-north-and-south/), any predictions we can make about where and when to send police resources is valuable information.
 
 <center>
+
 ##### Sources:
+
 </center>
 
 * [Nekeisha O. Spencer. (2017) Look what the hurricanes just blew in: analyzing the impact of the storm on criminal activities. *Journal of Crime and Justice* 40:4, pages 417-429.](https://www.tandfonline.com/doi/abs/10.1080/00779954.2011.572544)

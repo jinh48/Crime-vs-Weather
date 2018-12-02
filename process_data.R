@@ -1,6 +1,8 @@
 library(dplyr)
 library("RSocrata")
 
+
+
 # ---- WEATHER ----
 source("keys.R")
 
@@ -23,3 +25,5 @@ combined <- merge(x = crime_data, y = neigh_data, by = "Neighborhood", all.x = T
 
 # filter out null values
 crime <- combined %>% filter(!is.na(Longitude))
+
+

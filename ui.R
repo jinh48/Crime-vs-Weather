@@ -12,7 +12,8 @@ ui <- fluidPage(
                   min = 0, max = 100,
                   value = 100)),
     mainPanel(
-      plotOutput("mapPlot")
+      plotOutput("mapPlot"),
+      plotOutput("threeDplot")
     )
   )
 )

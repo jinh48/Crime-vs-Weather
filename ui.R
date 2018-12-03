@@ -13,7 +13,7 @@ ui <- fluidPage(
                   value = 100)),
     mainPanel(
       plotOutput("mapPlot"),
-      plotOutput("threeDplot")
+      plotlyOutput(outputId = "plot")
     )
   )
 )

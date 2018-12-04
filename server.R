@@ -72,17 +72,11 @@ percentages <- round(spring_slices / sum(spring_slices) * 100)
 #   labels <- paste(labels, percentages) # add percents to labels 
 #   labels <- paste(labels, "%", sep="") # add % to labels 
 
-#creates 4 differents pies that represent the 4 seasons
-spring_pie <- pie(spring_slices, labels = labels, col = rainbow(length(labels)),
-                  main="Spring Crimes Pie Chart", cex = 1)
-summer_pie <- pie(summer_slices, labels = labels, col = rainbow(length(labels)),
-                  main="Summer Crimes Pie Chart", cex = 1)
-autumn_pie <- pie(autumn_slices, labels = labels, col = rainbow(length(labels)),
-                  main="Autumn Crimes Pie Chart", cex = 1)
-winter_pie <- pie(winter_slices, labels = labels, col = rainbow(length(labels)),
-                  main="Winter Crimes Pie Chart", cex = 1)
-
-season_pie <- c(spring_pie, summer_pie, autumn_pie, winter_pie)
+# function to make pie 
+make_pie <- function(df, string) {
+  pie(df, labels = labels, col = rainbow(length(labels)),
+      main= paste0(string, " Crimes Pie Chart"), cex = 1)  
+}
 
 
 
@@ -91,22 +85,15 @@ season_pie <- c(spring_pie, summer_pie, autumn_pie, winter_pie)
 server <- function(input, output) {
   output$mapPlot <- renderPlot(washington_base)
   
-  output$season <- renderPlot(plot(season_pie[[1]], season_pie[[2]], season_pie[[3]], season_pie[[4]]))
+  output$piePlot <- renderPlot({
+    result <- switch(input$pie,
+                     pickWinter = make_pie(winter_slices, "Winter"),
+                     pickSpring = make_pie(spring_slices, "Spring"),
+                     pickSummer = make_pie(summer_slices, "Summer"),
+                     pickFall = make_pie(autumn_slices, "Autumn"))
+  })
   
-  count <- 0 
-    observeEvent(input$run, {
-      count <<- count + 1 
-      if(count < 4){
-        # Draw the plot if count is less than 6
-        output$plot <- renderPlot(plot(season_pie[[1]], season_pie[[count]],main = count))
-      }
-      else{
-        # Reset the counter if it is more than 5
-        count <- 0
-      }       
-    }
-    
-                 )
+ 
   
   # output$springPie <- renderPlot(spring_pie)
   # output$summerPie <- renderPlot(summer_pie)

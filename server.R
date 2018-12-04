@@ -84,13 +84,15 @@ summer_slices <- make_slices(summer)
 autumn_slices <- make_slices(spring)
 winter_slices <- make_slices(winter)
 
+# remove labels for small categories to make pie chart more readable
 labels <- unique(crime_pie$Crime.Subcategory)
+if (labels[])
 
 percentages <- round(spring_slices / sum(spring_slices) * 100)
 lbls <- paste(labels, percentages) # add percents to labels 
 lbls <- paste(labels, "%", sep="") # add % to labels 
 pie(spring_slices, labels = labels, col = rainbow(length(labels)),
-    main="Spring Pie Chart")
+    main="Spring Crimes Pie Chart")
 
 ?pie
 

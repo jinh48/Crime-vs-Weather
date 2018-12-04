@@ -32,33 +32,6 @@ wa_county <- subset(counties, region == "washington")
 
 server <- function(input, output) {
   output$mapPlot <- renderPlot(washington_base)
-
-  output$plot <- renderPlotly({
-    # creates main 3d plot
-    plot_ly( crime,
-            x = crime$Crime.Subcategory, y = crime$Neighborhood, z = crime$Occurred.Date, 
-            type = "scatter3d", mode="markers", text = crime$Primary.Offense.Description,
-            marker = list(
-              size = 10,
-              color = "rgba(63, 191, 191, .9)",
-              line = list(
-                color = "rgba(152, 0, 0, 1)",
-                width = 2
-              )
-            )
-    ) %>% # creates title line
-      layout(
-        title = "Crime Data of Washington ",
-        yaxis = list(zeroline = FALSE),
-        xaxis = list(zeroline = FALSE)
-      )
-  })
-  
-  # adds in hovering info
-  output$event <- renderPrint({
-    d <- event_data("plotly_hover")
-    if (is.null(d)) "Hover on a point to get info about it!" else d
-  })
 }
 
 # Setting up the pie charts:
@@ -86,14 +59,23 @@ winter_slices <- make_slices(winter)
 
 # remove labels for small categories to make pie chart more readable
 labels <- unique(crime_pie$Crime.Subcategory)
-if (labels[])
+
+indexes_to_remove <- spring_slices[spring_slices < 100]
 
 percentages <- round(spring_slices / sum(spring_slices) * 100)
-lbls <- paste(labels, percentages) # add percents to labels 
-lbls <- paste(labels, "%", sep="") # add % to labels 
+# UN COMMENT THESE TO ADD PERCENTAGES TO ALL LABELS:
+#   labels <- paste(labels, percentages) # add percents to labels 
+#   labels <- paste(labels, "%", sep="") # add % to labels 
 pie(spring_slices, labels = labels, col = rainbow(length(labels)),
     main="Spring Crimes Pie Chart")
 
+# hover to find percentages?
+# add in hovering info:
+# 
+# output$event <- renderPrint({
+#  d <- event_data("plotly_hover")
+#  if (is.null(d)) "Hover on a point to get info about it!" else d
+#})
 ?pie
 
 shinyServer(server)

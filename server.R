@@ -14,6 +14,7 @@ library(mapdata)
 source("process_data.R")
 # View(crime)
 
+# ---- SETTING UP WASHINGTON CRIME DATA ---- #
 states <- map_data("state")
 washington <- subset(states, region == "washington")
 counties <- map_data("county")
@@ -30,10 +31,8 @@ wa_county <- subset(counties, region == "washington")
    # geom_tile(aes(fill = weather)) + 
    # scale_fill_gradient(low = "darkgreen", high = "lightgreen")
 washington_base
-  
-server <- function(input, output) {
-  output$mapPlot <- renderPlot(washington_base)
-}
+
+# ---- SETTING UP PIE CHARTS FOR SEASON ---- #
 
 # Setting up the pie charts:
 # create a new data frame for the purpose of the pie charts
@@ -64,21 +63,64 @@ labels <- as.vector(unique(crime_pie$Crime.Subcategory))
 # remove  labels for categories with less than 3-digit counts,
 # to make pie chart more readable
 labels[nchar(spring_slices) < 4] = NA
+labels[nchar(summer_slices) < 4] = NA
+labels[nchar(autumn_slices) < 4] = NA
+labels[nchar(winter_slices) < 4] = NA
 
 percentages <- round(spring_slices / sum(spring_slices) * 100)
 # UN-COMMENT THESE TO ADD PERCENTAGES TO ALL LABELS:
 #   labels <- paste(labels, percentages) # add percents to labels 
 #   labels <- paste(labels, "%", sep="") # add % to labels 
-pie(spring_slices, labels = labels, col = rainbow(length(labels)),
-    main="Spring Crimes Pie Chart", cex = 1)
+
+#creates 4 differents pies that represent the 4 seasons
+spring_pie <- pie(spring_slices, labels = labels, col = rainbow(length(labels)),
+                  main="Spring Crimes Pie Chart", cex = 1)
+summer_pie <- pie(summer_slices, labels = labels, col = rainbow(length(labels)),
+                  main="Summer Crimes Pie Chart", cex = 1)
+autumn_pie <- pie(autumn_slices, labels = labels, col = rainbow(length(labels)),
+                  main="Autumn Crimes Pie Chart", cex = 1)
+winter_pie <- pie(winter_slices, labels = labels, col = rainbow(length(labels)),
+                  main="Winter Crimes Pie Chart", cex = 1)
+
+season_pie <- c(spring_pie, summer_pie, autumn_pie, winter_pie)
+
+
+
+# ---- SERVER FUNCTIONS ---- #
+  
+server <- function(input, output) {
+  output$mapPlot <- renderPlot(washington_base)
+  
+  output$season <- renderPlot(plot(season_pie[[1]], season_pie[[2]], season_pie[[3]], season_pie[[4]]))
+  
+  count <- 0 
+    observeEvent(input$run, {
+      count <<- count + 1 
+      if(count < 4){
+        # Draw the plot if count is less than 6
+        output$plot <- renderPlot(plot(season_pie[[1]], season_pie[[count]],main = count))
+      }
+      else{
+        # Reset the counter if it is more than 5
+        count <- 0
+      }       
+    }
+    
+                 )
+  
+  # output$springPie <- renderPlot(spring_pie)
+  # output$summerPie <- renderPlot(summer_pie)
+  # output$autumnPie <- renderPlot(autumn_pie)
+  # output$winterPie <- renderPlot(winter_pie)
+}
+
 
 # hover to find percentages?
-# add in hovering info:
-# 
+
 # output$event <- renderPrint({
 #  d <- event_data("plotly_hover")
 #  if (is.null(d)) "Hover on a point to get info about it!" else d
-#})
-?pie
+# })
+
 
 shinyServer(server)

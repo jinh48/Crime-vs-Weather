@@ -2,6 +2,7 @@ library(shiny)
 library(rsconnect)
 
 ui <- fluidPage(
+  
   titlePanel("Crime vs Weather"),
   sidebarLayout(
     sidebarPanel(
@@ -11,15 +12,17 @@ ui <- fluidPage(
       sliderInput("zoom", "Zoom In/Out (%):",
                   min = 0, max = 100,
                   value = 100)),
-    sideerInput(
-      selectInput("pie", "Select Season:",
-        c("Winter" = "pickWinter", "Spring" = "pickSpring",
-          "Summer" = "pickSummer", "Fall" = "pickFall"))
-    ),
+  sideerInput(
+    selectInput("pie", "Select Season:",
+      c("Winter" = "pickWinter", "Spring" = "pickSpring",
+        "Summer" = "pickSummer", "Fall" = "pickFall"))),
+    
     mainPanel(
       plotOutput("mapPlot")
+      
     )
   )
 )
+
 
 shinyUI(ui)

@@ -93,12 +93,6 @@ server <- function(input, output) {
                      pickFall = make_pie(autumn_slices, "Autumn"))
   })
   
- 
-  
-  # output$springPie <- renderPlot(spring_pie)
-  # output$summerPie <- renderPlot(summer_pie)
-  # output$autumnPie <- renderPlot(autumn_pie)
-  # output$winterPie <- renderPlot(winter_pie)
 }
 
 

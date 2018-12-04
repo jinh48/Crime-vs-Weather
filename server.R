@@ -12,7 +12,7 @@ library(maps)
 library(mapdata)
 
 source("process_data.R")
-#View(crime)
+# View(crime)
 
 states <- map_data("state")
 washington <- subset(states, region == "washington")
@@ -26,8 +26,9 @@ wa_county <- subset(counties, region == "washington")
    geom_polygon(data = wa_county, fill = NA, color = "white") +
    geom_polygon(color = "black", fill = NA) +
    geom_point(data = crime, mapping = aes(x = crime$Longitude, y = crime$Latitude),
-              color = "red", inherit.aes = FALSE)
-
+              color = "red", inherit.aes = FALSE) # +
+  # CHANGE WEATHER FILE NAME: geom_tile(aes(fill = weather_df)) + 
+  # scale_fill_gradient(low = "darkgreen", high = "lightgreen")
 
 server <- function(input, output) {
   output$mapPlot <- renderPlot(washington_base)
@@ -60,5 +61,39 @@ server <- function(input, output) {
   })
 }
 
+# Setting up the pie charts:
+# create a new data frame for the purpose of the pie charts
+crime_pie <- crime
+# delete the year from all dates
+crime_pie$Occurred.Date <- substring(crime_pie$Occurred.Date, 1, 5)
+# change dates to Date format (automatically changes all years to 2018)
+crime_pie$Occurred.Date <- as.Date(crime_pie$Occurred.Date, format = "%m/%d")
+# separate data by season
+spring <- crime_pie[crime_pie$Occurred.Date >= "2018-03-01" & crime_pie$Occurred.Date <= "2018-05-31",]
+summer <- crime_pie[crime_pie$Occurred.Date >= "2018-06-01" & crime_pie$Occurred.Date <= "2018-09-01",]
+autumn <- crime_pie[crime_pie$Occurred.Date >= "2018-10-01" & crime_pie$Occurred.Date <= "2018-11-30",]
+winter <- crime_pie[crime_pie$Occurred.Date >= "2018-12-01" | crime_pie$Occurred.Date <= "2018-02-28",]
+# create reusable function to make list of slice values for each season
+make_slices <- function(df) {
+  df <- aggregate(df, by = list(df$Crime.Subcategory), FUN = NROW)
+  vector <- df[,3]
+}
+
+spring_slices <- make_slices(spring)
+summer_slices <- make_slices(summer)
+autumn_slices <- make_slices(spring)
+winter_slices <- make_slices(winter)
+
+# remove labels for small categories to make pie chart more readable
+labels <- unique(crime_pie$Crime.Subcategory)
+if (labels[])
+
+percentages <- round(spring_slices / sum(spring_slices) * 100)
+lbls <- paste(labels, percentages) # add percents to labels 
+lbls <- paste(labels, "%", sep="") # add % to labels 
+pie(spring_slices, labels = labels, col = rainbow(length(labels)),
+    main="Spring Crimes Pie Chart")
+
+?pie
 
 shinyServer(server)

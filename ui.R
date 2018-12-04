@@ -11,9 +11,9 @@ ui <- fluidPage(
       sliderInput("zoom", "Zoom In/Out (%):",
                   min = 0, max = 100,
                   value = 100)),
-    sideerInput(
-      selectInput("color", "Select Color:", c("Regular" = "pickREG", "Rainbow" = "pickRAIN"))
-    ),
+    # sideerInput(
+    #   selectInput("pie", "Select Season:", c("Winter" = "pickWinter", "Rainbow" = "pickRAIN"))
+    # ),
     mainPanel(
       plotOutput("mapPlot")
     )

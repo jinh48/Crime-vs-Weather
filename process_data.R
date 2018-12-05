@@ -11,7 +11,7 @@ rain <- read.csv("data/rain.csv", header = TRUE, stringsAsFactors = FALSE)
 #dates <- rain[1:175,1]
 #   replicate dates for each set of measurements
 #rain$date <- rep_len(dates, length.out = 3150)
-#   delete first 175 - only contain dates, no data
+#   delete first 175 rows - only contain dates, no data
 #rain = rain[-1:-175,]
 #   reset row names to 1
 #row.names(rain) <- NULL
@@ -54,7 +54,19 @@ autumn_rain <- rain[rain$date >= "2018-09-01" & rain$date <= "2018-11-30",]
 winter_rain <- rain[rain$date >= "2018-12-01" | rain$date <= "2018-02-28",]
 
 # grouping the data by location, and finding the mean rainfall for each
+spring_rain_averages <- aggregate(spring_rain, list(spring_rain$lat), mean) %>% as.data.frame()
+summer_rain_averages <- aggregate(summer_rain, list(summer_rain$lat), mean) %>% as.data.frame()
+autumn_rain_averages <- aggregate(autumn_rain, list(autumn_rain$lat), mean) %>% as.data.frame()
 winter_rain_averages <- aggregate(winter_rain, list(winter_rain$lat), mean) %>% as.data.frame()
+# delete unnecessary rows
+spring_rain_averages <- spring_rain_averages[,-1]
+spring_rain_averages <- spring_rain_averages[,-4]
+summer_rain_averages <- summer_rain_averages[,-1]
+summer_rain_averages <- summer_rain_averages[,-4]
+autumn_rain_averages <- autumn_rain_averages[,-1]
+autumn_rain_averages <- autumn_rain_averages[,-4]
+winter_rain_averages <- winter_rain_averages[,-1]
+winter_rain_averages <- winter_rain_averages[,-4]
 
 # ---- WEATHER DATA TRANSFORMATION ----
 

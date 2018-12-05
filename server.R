@@ -20,15 +20,18 @@ washington <- subset(states, region == "washington")
 counties <- map_data("county")
 wa_county <- subset(counties, region == "washington")
 
-  washington_base <- ggplot(data = washington, mapping = aes(x = long, y = lat, group = group)) +
+  washington_base <- ggplot(data = washington, mapping = aes(x = long, y = lat, group=group)) +
    geom_polygon(fill = "palegreen", color = "black") +
-   coord_fixed(xlim = c(-122.00, -123.00), ylim = c(47.5,47.90), ratio = 1) +
+   coord_fixed(xlim = c(-122.00, -122.80), ylim = c(47.3,47.90), ratio = 1) +
    theme_nothing() +
    geom_polygon(data = wa_county, fill = NA, color = "white") +
    geom_polygon(color = "black", fill = NA) +
    geom_point(data = crime, mapping = aes(x = crime$Longitude, y = crime$Latitude),
-              color = "red", inherit.aes = FALSE) #+
-   # geom_tile(aes(fill = weather)) #+ 
+              color = "red", inherit.aes = FALSE)
+   #geom_tile(data = winter_rain_averages, aes(x = long, y = lat, alpha = values), fill = 'blue')
+  washington_base + geom_polygon(data = winter_rain_averages, aes(fill = values), color = "white") +
+    geom_polygon(color = "darkgreen", fill = NA) +
+    theme_void()
    #scale_fill_gradient(low = "darkgreen", high = "lightgreen")
 
 

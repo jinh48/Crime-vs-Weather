@@ -16,7 +16,7 @@ ui <- fluidPage(
         c("Winter" = "pickWinter", "Spring" = "pickSpring",
           "Summer" = "pickSummer", "Fall" = "pickFall"))),
     mainPanel(
-      plotOutput("mapPlot"),
+      google_mapOutput(outputId = "mapPlot"),
       plotOutput("piePlot"),
       textOutput("text"),
       plotlyOutput("plot3d")

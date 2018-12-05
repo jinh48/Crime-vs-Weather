@@ -15,10 +15,6 @@ library(googleway) #ADDED FOR NEW MAP
 source("process_data.R")
 source("key.R")
 
-# response_seattle <- GET(paste0(uri_civic, "/representatives"), query = params_civic) 
-# content_seattle <- content(response_civic, "text")
-# seattle_data <- fromJSON(content_civic)
-
 # ---- SETTING UP WASHINGTON CRIME DATA ---- #
 states <- map_data("state")
 washington <- subset(states, region == "washington")
@@ -101,7 +97,7 @@ make_pie <- function(df, string, input, output) {
 # NEW MAP FXN
 
 #function to make map
-make_map <- function(string, input, output) {
+make_map <- function(string) {
   df <- eval(as.name(string))
   df <- df[sample(nrow(df),1000),]
   google_map(data = df) %>%
@@ -119,12 +115,12 @@ make_map <- function(string, input, output) {
 server <- function(input, output) {
   #output$mapPlot <- renderPlot(washington_base)
   
-  output$mapPlot <- renderPlot({
+  output$mapPlot <- renderGoogle_map({
     result <- switch(input$pie,
-                     pickWinter = make_map("winter", input, output),
-                     pickSpring = make_map("spring", input, output),
-                     pickSummer = make_map("summer", input, output),
-                     pickFall = make_map("autumn", input, output))
+                     pickWinter = make_map("winter"),
+                     pickSpring = make_map("spring"),
+                     pickSummer = make_map("summer"),
+                     pickFall = make_map("autumn"))
     
   })
   

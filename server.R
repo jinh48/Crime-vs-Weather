@@ -140,7 +140,7 @@ server <- function(input, output) {
     # autumn <- crime_rain[crime_rain$Occurred.Date >= "2018-09-01" & crime_rain$Occurred.Date <= "2018-11-30",]
     # winter <- crime_rain[crime_rain$Occurred.Date >= "2018-12-01" | crime_rain$Occurred.Date <= "2018-02-28",]
     
-    p <- plot_ly(crime_rain, x = ~Air.Temperature, y = ~values, z = ~x, colors = "#BF382A") %>%
+    p <- plot_ly(crime_rain, x = ~Air.Temperature, y = ~values, z = ~x, text = ~date, colors = "#BF382A") %>%
       add_markers() %>%
       layout(scene = list(xaxis = list(title = 'Air Temperature'),
                           yaxis = list(title = 'Rain Percipitation'),

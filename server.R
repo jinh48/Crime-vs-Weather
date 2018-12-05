@@ -103,7 +103,8 @@ make_map <- function(string) {
   google_map(data = df) %>%
     add_circles(lat = "Latitude", lon = "Longitude") %>%
     add_heatmap(data = eval(as.name(paste0(string, "_rain_averages"))), 
-                lat = "lat", lon = "long", weight = "values", option_radius = 0.05)
+                lat = "lat", lon = "long", weight = "values", option_radius = 0.05,
+                legend = T)
 }
 
 
@@ -133,20 +134,20 @@ server <- function(input, output) {
     
   })
   
-  # output$plot3d <- renderPlotly({
-  #   # 
-  #   # spring <- crime_rain[crime_rain$Occurred.Date >= "2018-03-01" & crime_rain$Occurred.Date <= "2018-05-31",]
-  #   # summer <- crime_rain[crime_rain$Occurred.Date >= "2018-06-01" & crime_rain$Occurred.Date <= "2018-08-31",]
-  #   # autumn <- crime_rain[crime_rain$Occurred.Date >= "2018-09-01" & crime_rain$Occurred.Date <= "2018-11-30",]
-  #   # winter <- crime_rain[crime_rain$Occurred.Date >= "2018-12-01" | crime_rain$Occurred.Date <= "2018-02-28",]
-  #   
-  #   p <- plot_ly(crime_rain, x = ~Air.Temperature, y = ~values, z = ~x, text = ~date, colors = "#BF382A") %>%
-  #     add_markers() %>%
-  #     layout(scene = list(xaxis = list(title = 'Air Temperature'),
-  #                         yaxis = list(title = 'Rain Percipitation'),
-  #                         zaxis = list(title = 'Number of Crimes')))
-  #   
-  # })
+   output$plot3d <- renderPlotly({
+    #
+    # spring <- crime_rain[crime_rain$Occurred.Date >= "2018-03-01" & crime_rain$Occurred.Date <= "2018-05-31",]
+    # summer <- crime_rain[crime_rain$Occurred.Date >= "2018-06-01" & crime_rain$Occurred.Date <= "2018-08-31",]
+    # autumn <- crime_rain[crime_rain$Occurred.Date >= "2018-09-01" & crime_rain$Occurred.Date <= "2018-11-30",]
+    # winter <- crime_rain[crime_rain$Occurred.Date >= "2018-12-01" | crime_rain$Occurred.Date <= "2018-02-28",]
+
+    p <- plot_ly(crime_rain, x = ~Air.Temperature, y = ~values, z = ~x, colors = "#BF382A") %>% #text = ~date,
+      add_markers() %>%
+      layout(scene = list(xaxis = list(title = 'Air Temperature'),
+                          yaxis = list(title = 'Rain Percipitation'),
+                          zaxis = list(title = 'Number of Crimes')))
+
+  })
   
 }
 

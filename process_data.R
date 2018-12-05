@@ -4,6 +4,9 @@ library("tidyr")
 # weather <- read.csv("data/weather.csv", header = TRUE, stringsAsFactors = FALSE)
 crime <- read.csv("data/crime.csv", header = TRUE, stringsAsFactors = FALSE)
 rain <- read.csv("data/rain.csv", header = TRUE, stringsAsFactors = FALSE)
+# include only years 2002-2017, to match up with weather data
+crime <- filter(crime, grepl('2002|2003|2004|2005|2006|2007|2008|2009|2010|2011|
+                             2012|2013|2014|2015|2016|2017', Occurred.Date))
 
 rain_df <- read.csv("data/rain.csv", header = TRUE, stringsAsFactors = FALSE)
 crime_df <- crime <- read.csv("data/crime.csv", header = TRUE, stringsAsFactors = FALSE)
@@ -30,7 +33,7 @@ combine_rain_crime <- merge(x = crime_monthly, y = rain_x, by = "date", all.x = 
 
 df <- na.omit(combine_rain_crime)
 
-write.csv(df, "data/crime_rain.csv", row.names = FALSE)
+#write.csv(df, "data/crime_rain.csv", row.names = FALSE)
 
 crime_rain <- read.csv("data/crime_rain.csv", header = TRUE, stringsAsFactors = FALSE)
 

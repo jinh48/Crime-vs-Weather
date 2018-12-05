@@ -10,10 +10,10 @@ library(ggrepel)
 # library(rworldxtra)
 library(maps)
 library(mapdata)
+library(googleway) #ADDED FOR NEW MAP
 
 source("process_data.R")
 source("key.R")
-# View(crime)
 
 # response_seattle <- GET(paste0(uri_civic, "/representatives"), query = params_civic) 
 # content_seattle <- content(response_civic, "text")
@@ -91,17 +91,42 @@ make_pie <- function(df, string, input, output) {
   sum <- sum(slices)
   output$text <- renderText({
     result <- switch (input$pie,
-      pickWinter = paste0("There were ", sum, " recorded crimes in ", lower, " from 1975 to 2018."),
-      pickSpring = paste0("There were ", sum, " recorded crimes in ", lower, " from 1975 to 2018."),
-      pickSummer = paste0("There were ", sum, " recorded crimes in ", lower, " from 1975 to 2018."),
-      pickFall = paste0("There were ", sum, " recorded crimes in ", lower, " from 1975 to 2018."))})
+      pickWinter = paste0("There were ", sum, " recorded crimes in ", lower, " from 2002 to 2017"),
+      pickSpring = paste0("There were ", sum, " recorded crimes in ", lower, " from 2002 to 2017"),
+      pickSummer = paste0("There were ", sum, " recorded crimes in ", lower, " from 2002 to 2017"),
+      pickFall = paste0("There were ", sum, " recorded crimes in ", lower, " from 2002 to 2017"))})
 }
+
+#-----------------------------------------------------------------------------
+# NEW MAP FXN
+
+#function to make map
+make_map <- function(string, input, output) {
+  df <- eval(as.name(string))
+  df <- df[sample(nrow(df),1000),]
+  google_map(data = df) %>%
+    add_circles(lat = "Latitude", lon = "Longitude") %>%
+    add_heatmap(data = eval(as.name(paste0(string, "_rain_averages"))), 
+                lat = "lat", lon = "long", weight = "values", option_radius = 0.05)
+}
+
+
+#-----------------------------------------------------------------------------
 
 
 # ---- SERVER FUNCTIONS ---- #
   
 server <- function(input, output) {
-  output$mapPlot <- renderPlot(washington_base)
+  #output$mapPlot <- renderPlot(washington_base)
+  
+  output$mapPlot <- renderPlot({
+    result <- switch(input$pie,
+                     pickWinter = make_map("winter", input, output),
+                     pickSpring = make_map("spring", input, output),
+                     pickSummer = make_map("summer", input, output),
+                     pickFall = make_map("autumn", input, output))
+    
+  })
   
   output$piePlot <- renderPlot({
     result <- switch(input$pie,

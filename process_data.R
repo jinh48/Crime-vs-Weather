@@ -1,8 +1,39 @@
 library("dplyr")
 library("tidyr")
 
-weather <- read.csv("data/weather.csv", header = TRUE, stringsAsFactors = FALSE)
+# weather <- read.csv("data/weather.csv", header = TRUE, stringsAsFactors = FALSE)
 crime <- read.csv("data/crime.csv", header = TRUE, stringsAsFactors = FALSE)
+rain <- read.csv("data/rain.csv", header = TRUE, stringsAsFactors = FALSE)
+
+rain <- stack(rain)
+# store all dates in a vector
+dates <- rain[1:175,1]
+# replicate dates for each set of measurements
+rain$date <- rep_len(dates, length.out = 3150)
+# delete first 175 - only contain dates, no data
+rain = rain[-1:-175,]
+# reset row names to 1
+row.names(rain) <- NULL
+# replace rain gauge # with its corresponding lat/long
+rain$ind <- sub("RG01", "47.725033 -122.341384", rain$ind)
+rain$ind <- sub("RG02", "47.684385 -122.260105", rain$ind)
+rain$ind <- sub("RG03", "47.657997 -122.317634", rain$ind)
+rain$ind <- sub("RG04", "47.692621 -122.314398", rain$ind)
+rain$ind <- sub("RG05", "47.508121 -122.387062", rain$ind) # no RG06
+rain$ind <- sub("RG07", "47.699242 -122.370607", rain$ind)
+rain$ind <- sub("RG08", "47.668468 -122.386092", rain$ind)
+rain$ind <- sub("RG09", "47.674222 -122.355418", rain$ind)
+rain$ind <- sub("RG10_30", "47.518854 -122.266914", rain$ind)
+rain$ind <- sub("RG11", "47.618028 -122.358532", rain$ind)
+rain$ind <- sub("RG12", "47.643205 -122.393554", rain$ind) # no RG13
+rain$ind <- sub("RG14", "47.583939 -122.382968", rain$ind)
+rain$ind <- sub("RG15", "47.565439 -122.339688", rain$ind)
+rain$ind <- sub("RG16", "47.527203 -122.304678", rain$ind)
+rain$ind <- sub("RG17", "47.516310 -122.318071", rain$ind)
+rain$ind <- sub("RG18", "47.545982 -122.268642", rain$ind) # no RG19
+rain$ind <- sub("RG20_25", "47.614766 -122.294049", rain$ind)
+
+rain <- separate(rain, ind, c("lat", "long"), sep = " ", convert = TRUE, as.is = TRUE)
 
 # ---- WEATHER DATA TRANSFORMATION ----
 
@@ -12,7 +43,7 @@ crime <- read.csv("data/crime.csv", header = TRUE, stringsAsFactors = FALSE)
 ### selecting only Station Location, Air Temperature, DateTime columns
 # select_loc_air <- select(weather_data, StationLocation, AirTemperature, DateTime)
 
-### separating latitude and longitude singlue column numbers into two columns 
+### separating latitude and longitude single column numbers into two columns 
 # weather_selected <- separate(select_loc_air, StationLocation, c("Latitude", "Longitude"), sep = ",")
 
 ### separating DateTime column into two columns: Date & Time

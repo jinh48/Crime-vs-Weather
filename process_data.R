@@ -5,6 +5,36 @@ library("tidyr")
 crime <- read.csv("data/crime.csv", header = TRUE, stringsAsFactors = FALSE)
 rain <- read.csv("data/rain.csv", header = TRUE, stringsAsFactors = FALSE)
 
+rain_df <- read.csv("data/rain.csv", header = TRUE, stringsAsFactors = FALSE)
+
+# turning crime into date
+crime$Occurred.Date <- as.Date(crime$Occurred.Date, format = "%m/%d/%Y")
+
+# turn crime into months
+crime_x  <- format(crime, format="%m-%Y")
+
+# group by month and count how many crimes by rows
+crime_monthly <- aggregate(crime_x[,7], list(crime_x$Occurred.Date), FUN = length) %>% as.data.frame()
+
+# change to date column for merge
+names(crime_monthly)[names(crime_monthly) == 'Group.1'] <- 'date'
+
+# change rain to date
+rain_df$date <- as.Date(rain_df$date, format = "%m/%d/%Y")
+
+# change rain to month
+rain_x <- format(rain_df, format= "%m-%Y")
+
+# combine rain and crime
+combine_rain_crime <- merge(x = crime_monthly, y = rain_x, by = "date", all.x = TRUE)
+
+df <- na.omit(combine_rain_crime)
+
+write.csv(df, "data/crime_rain.csv", row.names = FALSE)
+
+crime_rain <- read.csv("data/crime_rain.csv", header = TRUE, stringsAsFactors = FALSE)
+
+
 # ----- MODIFIYING RAIN FILE TO SUIT OUR PROCESSING ------
 #rain <- stack(rain)
 #   store all dates in a vector

@@ -18,7 +18,8 @@ ui <- fluidPage(
     mainPanel(
       plotOutput("mapPlot"),
       plotOutput("piePlot"),
-      textOutput("text")
+      textOutput("text"),
+      plotlyOutput("plot3d")
     )
   )
 )

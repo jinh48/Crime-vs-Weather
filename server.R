@@ -25,22 +25,22 @@ washington <- subset(states, region == "washington")
 counties <- map_data("county")
 wa_county <- subset(counties, region == "washington")
 
-map.seattle_city <- qmap("seattle", zoom = 11, source="stamen", maptype="toner",darken = c(.3,"#BBBBBB"))
+#map.seattle_city <- qmap("seattle", zoom = 11, source="stamen", maptype="toner",darken = c(.3,"#BBBBBB"))
 
 
-  # washington_base <- ggplot(data = washington, mapping = aes(x = long, y = lat, group=group)) +
-  #  geom_polygon(fill = "palegreen", color = "black") +
-  #  coord_fixed(xlim = c(-122.00, -122.80), ylim = c(47.3,47.90), ratio = 1) +
-  #  theme_nothing() +
-  #  geom_polygon(data = wa_county, fill = NA, color = "white") +
-  #  geom_polygon(color = "black", fill = NA) +
-  #  geom_point(data = crime, mapping = aes(x = crime$Longitude, y = crime$Latitude),
-  #             color = "red", inherit.aes = FALSE)
-  #  #geom_tile(data = winter_rain_averages, aes(x = long, y = lat, alpha = values), fill = 'blue')
-  # washington_base + geom_polygon(data = winter_rain_averages, aes(fill = values), color = "white") +
-  #   geom_polygon(color = "darkgreen", fill = NA) +
-  #   theme_void()
-  #  #scale_fill_gradient(low = "darkgreen", high = "lightgreen")
+  washington_base <- ggplot(data = washington, mapping = aes(x = long, y = lat, group=group)) +
+   geom_polygon(fill = "palegreen", color = "black") +
+   coord_fixed(xlim = c(-122.00, -122.80), ylim = c(47.3,47.90), ratio = 1) +
+   theme_nothing() +
+   geom_polygon(data = wa_county, fill = NA, color = "white") +
+   geom_polygon(color = "black", fill = NA) +
+   geom_point(data = crime, mapping = aes(x = crime$Longitude, y = crime$Latitude),
+              color = "red", inherit.aes = FALSE)
+   geom_tile(data = winter_rain_averages, aes(x = long, y = lat, alpha = values), fill = 'blue')
+  washington_base + geom_polygon(data = winter_rain_averages, aes(fill = values), color = "white") +
+    geom_polygon(color = "darkgreen", fill = NA) +
+    theme_void()
+    scale_fill_gradient(low = "darkgreen", high = "lightgreen")
 
 
 # ---- SETTING UP PIE CHARTS FOR SEASON ---- #
@@ -79,7 +79,7 @@ labels[nchar(summer_slices) < 4] = NA
 labels[nchar(autumn_slices) < 4] = NA
 labels[nchar(winter_slices) < 4] = NA
 
-percentages <- round(spring_slices / sum(spring_slices) * 100)
+
 
 # function to make pie 
 make_pie <- function(df, string, input, output) {
@@ -114,15 +114,22 @@ server <- function(input, output) {
     
   })
   
+  output$plot3d <- renderPlotly({
+    # 
+    # spring <- crime_rain[crime_rain$Occurred.Date >= "2018-03-01" & crime_rain$Occurred.Date <= "2018-05-31",]
+    # summer <- crime_rain[crime_rain$Occurred.Date >= "2018-06-01" & crime_rain$Occurred.Date <= "2018-08-31",]
+    # autumn <- crime_rain[crime_rain$Occurred.Date >= "2018-09-01" & crime_rain$Occurred.Date <= "2018-11-30",]
+    # winter <- crime_rain[crime_rain$Occurred.Date >= "2018-12-01" | crime_rain$Occurred.Date <= "2018-02-28",]
+    
+    p <- plot_ly(crime_rain, x = ~x, y = ~values, z = ~date, colors = "#BF382A") %>%
+      add_markers() %>%
+      layout(scene = list(xaxis = list(title = 'Number of Crime'),
+                          yaxis = list(title = 'rain perciptiation'),
+                          zaxis = list(title = 'datez')))
+    
+  })
+  
 }
-
-
-# hover to find percentages?
-
-# output$event <- renderPrint({
-#  d <- event_data("plotly_hover")
-#  if (is.null(d)) "Hover on a point to get info about it!" else d
-# })
 
 
 shinyServer(server)

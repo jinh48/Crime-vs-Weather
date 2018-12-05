@@ -26,16 +26,14 @@ The link between crime and weather is almost ubiquitously agreed upon in the wor
 
 ## Where the data comes from:
 
-#### Road Weather Information Stations
+#### Monthly Rain Gauge Accumulations
 
-Source: *[data.seattle.gov](https://data.seattle.gov/Transportation/Road-Weather-Information-Stations/egc4-d24i)*
+Source: *[data.seattle.gov](https://data.seattle.gov/City-Business/Observed-Monthly-Rain-Gauge-Accumulations-Oct-2002/rdtp-hzy3)*
 
-Data Provided By: *Department of Transportation*
+Data Provided By: *Seattle Public Utilities*
 
 
-*This data is derived from sensor stations placed on bridges and surface streets within city limits.  Each station has a temperature sensor that measures the temperature of the street surface and a sensor that measures the ambient air temperature at the station each second.  Those values are averaged into temperature readings that are recorded by the station every minute.  The dataset is updated every fifteen minutes with new data.*
-
-NEW DATA: https://data.seattle.gov/City-Business/Observed-Monthly-Rain-Gauge-Accumulations-Oct-2002/rdtp-hzy3
+*This data is derived from monthly accumulations for Seattle Public Utility's rain gauges located throughout Seattle city limits. We located these rain gauges on a map to match up latitude and longitude values with each unique rain gauge station. The data ranges from 2002 to 2017.*
 
 
 
@@ -46,7 +44,7 @@ Source: *[data.seattle.gov](https://catalog.data.gov/dataset/crime-data-76bd0)*
 Data Provided By: *Seattle Police Department*
 
 
-*This data represents crime reported to the Seattle Police Department (SPD). Each row contains the record of a unique event where at least one criminal offense was reported by a member of the community or detected by an officer in the field...These data contain offenses and offense categorization coded to simulate the standard reported to the FBI under the National Incident Based Reporting System (NIBRS) and used to generate Uniform Crime Report (UCR) summary statistics...Not all offenses are reported here, only the primary offense as determined by the “Hierarchy Rule.”*
+*This data represents crime reported to the Seattle Police Department (SPD). Each row contains the record of a unique event where at least one criminal offense was reported by a member of the community or detected by an officer in the field...These data contain offenses and offense categorization coded to simulate the standard reported to the FBI under the National Incident Based Reporting System (NIBRS) and used to generate Uniform Crime Report (UCR) summary statistics...Not all offenses are reported here, only the primary offense as determined by the “Hierarchy Rule.” This data ranges from 1973 to 2018.*
 
 
 

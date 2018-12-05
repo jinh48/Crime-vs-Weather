@@ -79,8 +79,6 @@ labels[nchar(summer_slices) < 4] = NA
 labels[nchar(autumn_slices) < 4] = NA
 labels[nchar(winter_slices) < 4] = NA
 
-
-
 # function to make pie 
 make_pie <- function(df, string, input, output) {
   pie(df, labels = labels, col = rainbow(length(labels)),

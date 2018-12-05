@@ -27,9 +27,9 @@ wa_county <- subset(counties, region == "washington")
    geom_polygon(data = wa_county, fill = NA, color = "white") +
    geom_polygon(color = "black", fill = NA) +
    geom_point(data = crime, mapping = aes(x = crime$Longitude, y = crime$Latitude),
-              color = "red", inherit.aes = FALSE) # +
-   # geom_tile(aes(fill = weather)) + 
-   # scale_fill_gradient(low = "darkgreen", high = "lightgreen")
+              color = "red", inherit.aes = FALSE) +
+   geom_tile(aes(fill = weather)) #+ 
+   #scale_fill_gradient(low = "darkgreen", high = "lightgreen")
 washington_base
 
 # ---- SETTING UP PIE CHARTS FOR SEASON ---- #

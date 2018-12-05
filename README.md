@@ -39,7 +39,7 @@ Data Provided By: *Department of Transportation*
 
 #### Crime Data
 
-Source: *[data.seattle.gov](https://data.seattle.gov/Transportation/Road-Weather-Information-Stations/egc4-d24i)*
+Source: *[data.seattle.gov](https://catalog.data.gov/dataset/crime-data-76bd0)*
 
 Data Provided By: *Seattle Police Department*
 

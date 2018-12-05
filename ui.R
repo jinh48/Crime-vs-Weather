@@ -17,7 +17,8 @@ ui <- fluidPage(
           "Summer" = "pickSummer", "Fall" = "pickFall"))),
     mainPanel(
       plotOutput("mapPlot"),
-      plotOutput("piePlot")
+      plotOutput("piePlot"),
+      textOutput("text")
     )
   )
 )

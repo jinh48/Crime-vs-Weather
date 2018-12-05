@@ -4,7 +4,6 @@ library("tidyr")
 weather <- read.csv("data/weather.csv", header = TRUE, stringsAsFactors = FALSE)
 crime <- read.csv("data/crime.csv", header = TRUE, stringsAsFactors = FALSE)
 
-
 # ---- WEATHER DATA TRANSFORMATION ----
 
 ### reading in 2gb file of raw data

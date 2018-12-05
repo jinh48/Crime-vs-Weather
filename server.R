@@ -27,8 +27,8 @@ wa_county <- subset(counties, region == "washington")
    geom_polygon(data = wa_county, fill = NA, color = "white") +
    geom_polygon(color = "black", fill = NA) +
    geom_point(data = crime, mapping = aes(x = crime$Longitude, y = crime$Latitude),
-              color = "red", inherit.aes = FALSE) +
-   geom_tile(aes(fill = weather)) #+ 
+              color = "red", inherit.aes = FALSE) #+
+   # geom_tile(aes(fill = weather)) #+ 
    #scale_fill_gradient(low = "darkgreen", high = "lightgreen")
 washington_base
 
@@ -47,6 +47,7 @@ spring <- crime_pie[crime_pie$Occurred.Date >= "2018-03-01" & crime_pie$Occurred
 summer <- crime_pie[crime_pie$Occurred.Date >= "2018-06-01" & crime_pie$Occurred.Date <= "2018-09-01",]
 autumn <- crime_pie[crime_pie$Occurred.Date >= "2018-10-01" & crime_pie$Occurred.Date <= "2018-11-30",]
 winter <- crime_pie[crime_pie$Occurred.Date >= "2018-12-01" | crime_pie$Occurred.Date <= "2018-02-28",]
+
 # create reusable function to make list of slice values for each season
 make_slices <- function(df) {
   df <- aggregate(df, by = list(df$Crime.Subcategory), FUN = NROW)
@@ -55,7 +56,7 @@ make_slices <- function(df) {
 
 spring_slices <- make_slices(spring)
 summer_slices <- make_slices(summer)
-autumn_slices <- make_slices(spring)
+autumn_slices <- make_slices(autumn)
 winter_slices <- make_slices(winter)
 
 labels <- as.vector(unique(crime_pie$Crime.Subcategory))
@@ -68,16 +69,24 @@ labels[nchar(autumn_slices) < 4] = NA
 labels[nchar(winter_slices) < 4] = NA
 
 percentages <- round(spring_slices / sum(spring_slices) * 100)
-# UN-COMMENT THESE TO ADD PERCENTAGES TO ALL LABELS:
-#   labels <- paste(labels, percentages) # add percents to labels 
-#   labels <- paste(labels, "%", sep="") # add % to labels 
 
 # function to make pie 
-make_pie <- function(df, string) {
+make_pie <- function(df, string, input, output) {
   pie(df, labels = labels, col = rainbow(length(labels)),
-      main= paste0(string, " Crimes Pie Chart"), cex = 1)  
-}
+      main = paste0(string, " Crimes Pie Chart"), cex = 1) 
+  
+  lower <- tolower(string)
+  slices <- eval(as.name(paste0(lower, "_slices")))
+  
 
+  sum <- sum(slices)
+  output$text <- renderText({
+    result <- switch (input$pie,
+      pickWinter = paste0("There were ", sum, " recorded crimes in ", lower, " from 1975 to 2018."),
+      pickSpring = paste0("There were ", sum, " recorded crimes in ", lower, " from 1975 to 2018."),
+      pickSummer = paste0("There were ", sum, " recorded crimes in ", lower, " from 1975 to 2018."),
+      pickFall = paste0("There were ", sum, " recorded crimes in ", lower, " from 1975 to 2018."))})
+}
 
 
 # ---- SERVER FUNCTIONS ---- #
@@ -87,10 +96,11 @@ server <- function(input, output) {
   
   output$piePlot <- renderPlot({
     result <- switch(input$pie,
-                     pickWinter = make_pie(winter_slices, "Winter"),
-                     pickSpring = make_pie(spring_slices, "Spring"),
-                     pickSummer = make_pie(summer_slices, "Summer"),
-                     pickFall = make_pie(autumn_slices, "Autumn"))
+                     pickWinter = make_pie(winter_slices, "Winter", input, output),
+                     pickSpring = make_pie(spring_slices, "Spring", input, output),
+                     pickSummer = make_pie(summer_slices, "Summer", input, output),
+                     pickFall = make_pie(autumn_slices, "Autumn", input, output))
+    
   })
   
 }

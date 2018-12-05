@@ -1,8 +1,11 @@
 library(shiny)
+library(shinyWidgets)
 library(rsconnect)
 
 ui <- fluidPage(
-  
+  setBackgroundColor(
+    color = "#336699"
+  ),
   titlePanel("Crime vs Weather"),
   sidebarLayout(
     sidebarPanel(

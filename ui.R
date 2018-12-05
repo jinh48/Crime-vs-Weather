@@ -24,8 +24,8 @@ ui <- fluidPage(
          crime, any predictions we can make about where and when to send police resources is valuable information.", style = "background-color:white"),
       google_mapOutput(outputId = "mapPlot"),
       plotOutput("piePlot"),
-      h2(textOutput("text")),
-      plotlyOutput("plot3d")
+      h2(textOutput("text"))
+      #plotlyOutput("plot3d")
     )
   )
 )

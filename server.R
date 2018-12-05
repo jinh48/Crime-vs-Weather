@@ -22,7 +22,7 @@ wa_county <- subset(counties, region == "washington")
 
   washington_base <- ggplot(data = washington, mapping = aes(x = long, y = lat, group = group)) +
    geom_polygon(fill = "palegreen", color = "black") +
-   coord_fixed(xlim = c(-122.36, -123.33), ylim = c(47,47.99), ratio = 1) +
+   coord_fixed(xlim = c(-122.00, -123.00), ylim = c(47.5,47.90), ratio = 1) +
    theme_nothing() +
    geom_polygon(data = wa_county, fill = NA, color = "white") +
    geom_polygon(color = "black", fill = NA) +

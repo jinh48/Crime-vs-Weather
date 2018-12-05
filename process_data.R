@@ -33,7 +33,20 @@ rain$ind <- sub("RG17", "47.516310 -122.318071", rain$ind)
 rain$ind <- sub("RG18", "47.545982 -122.268642", rain$ind) # no RG19
 rain$ind <- sub("RG20_25", "47.614766 -122.294049", rain$ind)
 
+# separate lat/long into 2 different columns
 rain <- separate(rain, ind, c("lat", "long"), sep = " ", convert = TRUE, as.is = TRUE)
+# delete the year from all dates
+rain$date <- substring(rain$date, 1, 5)
+# change dates to Date format (automatically changes all years to 2018,
+# so we can select by month & day only)
+rain$date <- as.Date(rain$date, format = "%m/%d")
+# remove na values
+rain <- na.omit(rain)
+# separate data by season
+spring_rain <- rain[rain$date >= "2018-03-01" & rain$date <= "2018-05-31",]
+summer_rain <- rain[rain$date >= "2018-06-01" & rain$date <= "2018-08-31",]
+autumn_rain <- rain[rain$date >= "2018-09-01" & rain$date <= "2018-11-30",]
+winter_rain <- rain[rain$date >= "2018-12-01" | rain$date <= "2018-02-28",]
 
 # ---- WEATHER DATA TRANSFORMATION ----
 

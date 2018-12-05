@@ -22,7 +22,7 @@ wa_county <- subset(counties, region == "washington")
 
   washington_base <- ggplot(data = washington, mapping = aes(x = long, y = lat, group = group)) +
    geom_polygon(fill = "palegreen", color = "black") +
-   coord_fixed(xlim = c(-123, -121), ylim = c(47,48), ratio = 1.3) +
+   coord_fixed(xlim = c(-122.36, -123.33), ylim = c(47,47.99), ratio = 1) +
    theme_nothing() +
    geom_polygon(data = wa_county, fill = NA, color = "white") +
    geom_polygon(color = "black", fill = NA) +
@@ -30,7 +30,7 @@ wa_county <- subset(counties, region == "washington")
               color = "red", inherit.aes = FALSE) #+
    # geom_tile(aes(fill = weather)) #+ 
    #scale_fill_gradient(low = "darkgreen", high = "lightgreen")
-washington_base
+
 
 # ---- SETTING UP PIE CHARTS FOR SEASON ---- #
 
@@ -44,8 +44,8 @@ crime_pie$Occurred.Date <- substring(crime_pie$Occurred.Date, 1, 5)
 crime_pie$Occurred.Date <- as.Date(crime_pie$Occurred.Date, format = "%m/%d")
 # separate data by season
 spring <- crime_pie[crime_pie$Occurred.Date >= "2018-03-01" & crime_pie$Occurred.Date <= "2018-05-31",]
-summer <- crime_pie[crime_pie$Occurred.Date >= "2018-06-01" & crime_pie$Occurred.Date <= "2018-09-01",]
-autumn <- crime_pie[crime_pie$Occurred.Date >= "2018-10-01" & crime_pie$Occurred.Date <= "2018-11-30",]
+summer <- crime_pie[crime_pie$Occurred.Date >= "2018-06-01" & crime_pie$Occurred.Date <= "2018-08-31",]
+autumn <- crime_pie[crime_pie$Occurred.Date >= "2018-09-01" & crime_pie$Occurred.Date <= "2018-11-30",]
 winter <- crime_pie[crime_pie$Occurred.Date >= "2018-12-01" | crime_pie$Occurred.Date <= "2018-02-28",]
 
 # create reusable function to make list of slice values for each season

@@ -6,12 +6,12 @@ crime <- read.csv("data/crime.csv", header = TRUE, stringsAsFactors = FALSE)
 rain <- read.csv("data/rain.csv", header = TRUE, stringsAsFactors = FALSE)
 
 rain_df <- read.csv("data/rain.csv", header = TRUE, stringsAsFactors = FALSE)
-
+crime_df <- crime <- read.csv("data/crime.csv", header = TRUE, stringsAsFactors = FALSE)
 # turning crime into date
-crime$Occurred.Date <- as.Date(crime$Occurred.Date, format = "%m/%d/%Y")
+crime_df$Occurred.Date <- as.Date(crime_df$Occurred.Date, format = "%m/%d/%Y")
 
 # turn crime into months
-crime_x  <- format(crime, format="%m-%Y")
+crime_x  <- format(crime_df, format="%m-%Y")
 
 # group by month and count how many crimes by rows
 crime_monthly <- aggregate(crime_x[,7], list(crime_x$Occurred.Date), FUN = length) %>% as.data.frame()

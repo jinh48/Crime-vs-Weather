@@ -44,7 +44,7 @@ Source: *[data.seattle.gov](https://catalog.data.gov/dataset/crime-data-76bd0)*
 Data Provided By: *Seattle Police Department*
 
 
-*This data represents crime reported to the Seattle Police Department (SPD). Each row contains the record of a unique event where at least one criminal offense was reported by a member of the community or detected by an officer in the field...These data contain offenses and offense categorization coded to simulate the standard reported to the FBI under the National Incident Based Reporting System (NIBRS) and used to generate Uniform Crime Report (UCR) summary statistics...Not all offenses are reported here, only the primary offense as determined by the “Hierarchy Rule.” This data ranges from 1973 to 2018.*
+*This data represents crime reported to the Seattle Police Department (SPD). Each row contains the record of a unique event where at least one criminal offense was reported by a member of the community or detected by an officer in the field...These data contain offenses and offense categorization coded to simulate the standard reported to the FBI under the National Incident Based Reporting System (NIBRS) and used to generate Uniform Crime Report (UCR) summary statistics...Not all offenses are reported here, only the primary offense as determined by the “Hierarchy Rule.” This data ranges from 1973 to 2018, but we modified the data set to only include 2002 to 2017, to match up with our weather data set.*
 
 
 

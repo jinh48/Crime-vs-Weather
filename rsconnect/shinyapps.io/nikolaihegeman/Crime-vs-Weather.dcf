@@ -1,0 +1,12 @@
+name: Crime-vs-Weather
+title: Crime-vs-Weather
+username:
+account: nikolaihegeman
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 605735
+bundleId: 1744080
+url: https://nikolaihegeman.shinyapps.io/Crime-vs-Weather/
+when: 1544050720.06512
+asMultiple: FALSE
+asStatic: FALSE

@@ -10,17 +10,22 @@ crime <- filter(crime, grepl('2002|2003|2004|2005|2006|2007|2008|2009|2010|2011|
 
 rain_df <- read.csv("data/rain.csv", header = TRUE, stringsAsFactors = FALSE)
 crime_df <- crime <- read.csv("data/crime.csv", header = TRUE, stringsAsFactors = FALSE)
+weather_df <- read.csv("data/weather.csv", header = TRUE, stringsAsFactors = FALSE)
 # turning crime into date
 crime_df$Occurred.Date <- as.Date(crime_df$Occurred.Date, format = "%m/%d/%Y")
+weather_df$Date <- as.Date(weather_df$Date, format = "%m/%d/%Y")
 
 # turn crime into months
 crime_x  <- format(crime_df, format="%m-%Y")
+weather_x <- format(weather_df, format = "%m-%Y")
 
 # group by month and count how many crimes by rows
 crime_monthly <- aggregate(crime_x[,7], list(crime_x$Occurred.Date), FUN = length) %>% as.data.frame()
 
 # change to date column for merge
 names(crime_monthly)[names(crime_monthly) == 'Group.1'] <- 'date'
+
+names(weather_x)[names(weather_x) == 'Date'] <- 'date'
 
 # change rain to date
 rain_df$date <- as.Date(rain_df$date, format = "%m/%d/%Y")
@@ -31,9 +36,11 @@ rain_x <- format(rain_df, format= "%m-%Y")
 # combine rain and crime
 combine_rain_crime <- merge(x = crime_monthly, y = rain_x, by = "date", all.x = TRUE)
 
-df <- na.omit(combine_rain_crime)
+combine_temp <- merge(x = combine_rain_crime, y = weather_x, by = "date", all.x = TRUE)
 
-#write.csv(df, "data/crime_rain.csv", row.names = FALSE)
+df <- na.omit(combine_temp)
+
+write.csv(df, "data/crime_rain.csv", row.names = FALSE)
 
 crime_rain <- read.csv("data/crime_rain.csv", header = TRUE, stringsAsFactors = FALSE)
 

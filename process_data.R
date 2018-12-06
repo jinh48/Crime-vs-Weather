@@ -1,19 +1,30 @@
+# library packages to be used
 library("dplyr")
 library("tidyr")
 
-# weather <- read.csv("data/weather.csv", header = TRUE, stringsAsFactors = FALSE)
+# ***ATTENTION***
+# some sections of this code is commented out because original files that were transformed 
+# into our processing data were too large (2GB + file size). 
+# commented code was left in to show how to transform data 
+# final transformed data was written to csv files
+
+
+# ---- DATA FOR PLOTS ---- #
+
 crime <- read.csv("data/crime.csv", header = TRUE, stringsAsFactors = FALSE)
 rain <- read.csv("data/rain.csv", header = TRUE, stringsAsFactors = FALSE)
+
 # include only years 2002-2017, to match up with weather data
 crime <- filter(crime, grepl('2002|2003|2004|2005|2006|2007|2008|2009|2010|2011|
                              2012|2013|2014|2015|2016|2017', Occurred.Date))
 
 
-
 # ---- DATA FOR 3D PLOT ---- #
+
 rain_df <- read.csv("data/rain.csv", header = TRUE, stringsAsFactors = FALSE)
 crime_df <- crime <- read.csv("data/crime.csv", header = TRUE, stringsAsFactors = FALSE)
 weather_df <- read.csv("data/weather.csv", header = TRUE, stringsAsFactors = FALSE)
+
 # turning crime into date
 crime_df$Occurred.Date <- as.Date(crime_df$Occurred.Date, format = "%m/%d/%Y")
 weather_df$Date <- as.Date(weather_df$Date, format = "%m/%d/%Y")
@@ -38,32 +49,34 @@ rain_x <- format(rain_df, format= "%m-%Y")
 
 # combine rain and crime
 combine_rain_crime <- merge(x = crime_monthly, y = rain_x, by = "date", all.x = TRUE)
-
 combine_temp <- merge(x = combine_rain_crime, y = weather_x, by = "date", all.x = TRUE)
 
+# Omitting all NA values
 df <- na.omit(combine_temp)
 
+# writing to csv file
 write.csv(df, "data/crime_rain.csv", row.names = FALSE)
 
+# reading in data to be used for 3D plot
 crime_rain <- read.csv("data/crime_rain.csv", header = TRUE, stringsAsFactors = FALSE)
-
-
 
 
 
 # ----- DATA FOR BAR GRAPHS ----- #
 
+# reading in data
 crime_names <- read.csv("data/crime.csv", header = TRUE, stringsAsFactors = FALSE)
-select_names <- crime_names %>% group_by(Crime.Subcategory) %>% select(Occurred.Date, Crime.Subcategory) %>% 
-  summarise(n = n())
 
+# turning the column Occurred.Date into a date value
 crime_names$Occurred.Date <- as.Date(crime_names$Occurred.Date, format = "%m/%d/%Y")
 
+# filtering out the dates to create the four seasons
 qone <- crime_names[crime_names$Occurred.Date >= "2018-03-01" & crime_names$Occurred.Date <= "2018-05-31",]
 qtwo <- crime_names[crime_names$Occurred.Date >= "2018-06-01" & crime_names$Occurred.Date <= "2018-08-31",]
 qthree <- crime_names[crime_names$Occurred.Date >= "2018-09-01" & crime_names$Occurred.Date <= "2018-11-30",]
 qfour <- crime_names[crime_names$Occurred.Date >= "2018-12-01" | crime_names$Occurred.Date <= "2018-02-28",]
 
+# group by the crime category, and counts how many for each crime in each season 
 sum_one <- qone %>% group_by(Crime.Subcategory) %>% select(Occurred.Date, Crime.Subcategory) %>% 
   summarise(n = n()) %>% as.data.frame()
 sum_two <- qtwo %>% group_by(Crime.Subcategory) %>% select(Occurred.Date, Crime.Subcategory) %>% 
@@ -73,43 +86,42 @@ sum_three <- qthree %>% group_by(Crime.Subcategory) %>% select(Occurred.Date, Cr
 sum_four <- qfour %>% group_by(Crime.Subcategory) %>% select(Occurred.Date, Crime.Subcategory) %>% 
   summarise(n = n()) %>% as.data.frame()
 
-quarters <- c(sum_one, sum_two, sum_three, sum_four)
 
 
+# ---- MODIFIYING RAIN FILE TO SUIT OUR PROCESSING ---- #
 
-# ----- MODIFIYING RAIN FILE TO SUIT OUR PROCESSING ------
-#rain <- stack(rain)
+# rain <- stack(rain)
 #   store all dates in a vector
-#dates <- rain[1:175,1]
+# dates <- rain[1:175,1]
 #   replicate dates for each set of measurements
-#rain$date <- rep_len(dates, length.out = 3150)
+# rain$date <- rep_len(dates, length.out = 3150)
 #   delete first 175 rows - only contain dates, no data
-#rain = rain[-1:-175,]
+# rain = rain[-1:-175,]
 #   reset row names to 1
-#row.names(rain) <- NULL
+# row.names(rain) <- NULL
 #   replace rain gauge # with its corresponding lat/long
-#rain$ind <- sub("RG01", "47.725033 -122.341384", rain$ind)
-#rain$ind <- sub("RG02", "47.684385 -122.260105", rain$ind)
-#rain$ind <- sub("RG03", "47.657997 -122.317634", rain$ind)
-#rain$ind <- sub("RG04", "47.692621 -122.314398", rain$ind)
-#rain$ind <- sub("RG05", "47.508121 -122.387062", rain$ind) # no RG06
-#rain$ind <- sub("RG07", "47.699242 -122.370607", rain$ind)
-#rain$ind <- sub("RG08", "47.668468 -122.386092", rain$ind)
-#rain$ind <- sub("RG09", "47.674222 -122.355418", rain$ind)
-#rain$ind <- sub("RG10_30", "47.518854 -122.266914", rain$ind)
-#rain$ind <- sub("RG11", "47.618028 -122.358532", rain$ind)
-#rain$ind <- sub("RG12", "47.643205 -122.393554", rain$ind) # no RG13
-#rain$ind <- sub("RG14", "47.583939 -122.382968", rain$ind)
-#rain$ind <- sub("RG15", "47.565439 -122.339688", rain$ind)
-#rain$ind <- sub("RG16", "47.527203 -122.304678", rain$ind)
-#rain$ind <- sub("RG17", "47.516310 -122.318071", rain$ind)
-#rain$ind <- sub("RG18", "47.545982 -122.268642", rain$ind) # no RG19
-#rain$ind <- sub("RG20_25", "47.614766 -122.294049", rain$ind)
+# rain$ind <- sub("RG01", "47.725033 -122.341384", rain$ind)
+# rain$ind <- sub("RG02", "47.684385 -122.260105", rain$ind)
+# rain$ind <- sub("RG03", "47.657997 -122.317634", rain$ind)
+# rain$ind <- sub("RG04", "47.692621 -122.314398", rain$ind)
+# rain$ind <- sub("RG05", "47.508121 -122.387062", rain$ind) # no RG06
+# rain$ind <- sub("RG07", "47.699242 -122.370607", rain$ind)
+# rain$ind <- sub("RG08", "47.668468 -122.386092", rain$ind)
+# rain$ind <- sub("RG09", "47.674222 -122.355418", rain$ind)
+# rain$ind <- sub("RG10_30", "47.518854 -122.266914", rain$ind)
+# rain$ind <- sub("RG11", "47.618028 -122.358532", rain$ind)
+# rain$ind <- sub("RG12", "47.643205 -122.393554", rain$ind) # no RG13
+# rain$ind <- sub("RG14", "47.583939 -122.382968", rain$ind)
+# rain$ind <- sub("RG15", "47.565439 -122.339688", rain$ind)
+# rain$ind <- sub("RG16", "47.527203 -122.304678", rain$ind)
+# rain$ind <- sub("RG17", "47.516310 -122.318071", rain$ind)
+# rain$ind <- sub("RG18", "47.545982 -122.268642", rain$ind) # no RG19
+# rain$ind <- sub("RG20_25", "47.614766 -122.294049", rain$ind)
 
 #   separate lat/long into 2 different columns
-#rain <- separate(rain, ind, c("lat", "long"), sep = " ", convert = TRUE, as.is = TRUE)
+# rain <- separate(rain, ind, c("lat", "long"), sep = " ", convert = TRUE, as.is = TRUE)
 #   coverting rainfall to numeric 
-#rain <- rain %>% mutate(values = as.numeric(values))
+# rain <- rain %>% mutate(values = as.numeric(values))
 
 # delete the year from all dates
 rain$date <- substring(rain$date, 1, 5)
@@ -139,6 +151,8 @@ autumn_rain_averages <- autumn_rain_averages[,-1]
 autumn_rain_averages <- autumn_rain_averages[,-4]
 winter_rain_averages <- winter_rain_averages[,-1]
 winter_rain_averages <- winter_rain_averages[,-4]
+
+
 
 # ---- WEATHER DATA TRANSFORMATION ----
 

@@ -59,7 +59,7 @@ make_pie <- function(df, string, input, output) {
   sum <- sum(slices)
   output$text <- renderText({
     result <- switch (input$pie,
-      pickWinter = paste0("<center>There were ", sum, " recorded crimes in ", lower, " from 2002 to 2017."),
+      pickWinter = paste0("There were ", sum, " recorded crimes in ", lower, " from 2002 to 2017."),
       pickSpring = paste0("There were ", sum, " recorded crimes in ", lower, " from 2002 to 2017."),
       pickSummer = paste0("There were ", sum, " recorded crimes in ", lower, " from 2002 to 2017."),
       pickFall = paste0("There were ", sum, " recorded crimes in ", lower, " from 2002 to 2017."))})

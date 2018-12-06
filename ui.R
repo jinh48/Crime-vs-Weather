@@ -6,15 +6,24 @@ ui <- fluidPage(
   setBackgroundColor(
     color = "#f9f1f1"
   ),
-  titlePanel("Crime vs Weather"),
-  sidebarLayout(
-    sidebarPanel(
-      # sliderInput("date", "Date:",
-      #             min = 0, max = 1000,
-      #             value = 0),
-      selectInput("pie", "Select Season:",
-        c("Winter" = "pickWinter", "Spring" = "pickSpring",
-          "Summer" = "pickSummer", "Fall" = "pickFall"))),
+  
+  headerPanel(HTML("<center><em>Crime VS Weather</em></center>")),
+  titlePanel(HTML("<center>Rachel Kisela, Jin Ning Huang, Nikolai Liang</center>")),
+  
+  fixedPanel(
+    selectInput("pie", "Select Season:",
+                c("Winter" = "pickWinter", "Spring" = "pickSpring",
+                  "Summer" = "pickSummer", "Fall" = "pickFall")), draggable = T),
+  
+  
+ sidebarLayout(
+   sidebarPanel(
+     # sliderInput("date", "Date:",
+     #             min = 0, max = 1000,
+     #             value = 0),
+     selectInput("pie", "Select Season:",
+       c("Winter" = "pickWinter", "Spring" = "pickSpring",
+        "Summer" = "pickSummer", "Fall" = "pickFall"))),
     mainPanel(
       h4("The link between crime and precipitation is 
          almost ubiquitously agreed upon in the world of criminology. 

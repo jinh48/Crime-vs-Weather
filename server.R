@@ -103,8 +103,7 @@ make_map <- function(string) {
   google_map(data = df) %>%
     add_circles(lat = "Latitude", lon = "Longitude") %>%
     add_heatmap(data = eval(as.name(paste0(string, "_rain_averages"))), 
-                lat = "lat", lon = "long", weight = "values", option_radius = 0.05,
-                legend = T)
+                lat = "lat", lon = "long", weight = "values", option_radius = 0.05)
 }
 
 

@@ -85,6 +85,7 @@ ui <- fluidPage(
       plotlyOutput("plot3d"),
       h3(HTML("<center>While there are changes between seasons in number of crimes, the type of crime does not fluctuate, 
               as seen below:</center>")),
+      h4(HTML("<center><em>Click through the seasons to see the changing in type of crime.</em></center>")),
       
       # outputting the bar graphs
       plotlyOutput("graph")

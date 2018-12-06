@@ -65,13 +65,13 @@ qthree <- crime_names[crime_names$Occurred.Date >= "2018-09-01" & crime_names$Oc
 qfour <- crime_names[crime_names$Occurred.Date >= "2018-12-01" | crime_names$Occurred.Date <= "2018-02-28",]
 
 sum_one <- qone %>% group_by(Crime.Subcategory) %>% select(Occurred.Date, Crime.Subcategory) %>% 
-  summarise(n = n())
+  summarise(n = n()) %>% as.data.frame()
 sum_two <- qtwo %>% group_by(Crime.Subcategory) %>% select(Occurred.Date, Crime.Subcategory) %>% 
-  summarise(n = n())
+  summarise(n = n()) %>% as.data.frame()
 sum_three <- qthree %>% group_by(Crime.Subcategory) %>% select(Occurred.Date, Crime.Subcategory) %>% 
-  summarise(n = n())
+  summarise(n = n()) %>% as.data.frame()
 sum_four <- qfour %>% group_by(Crime.Subcategory) %>% select(Occurred.Date, Crime.Subcategory) %>% 
-  summarise(n = n())
+  summarise(n = n()) %>% as.data.frame()
 
 quarters <- c(sum_one, sum_two, sum_three, sum_four)
 

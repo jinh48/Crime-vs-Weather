@@ -106,6 +106,17 @@ make_map <- function(string) {
                 lat = "lat", lon = "long", weight = "values", option_radius = 0.05)
 }
 
+# ---- Make Bar Charts ---- #
+make_graph <- function(df, string) {
+  plot_ly(df, x = ~Crime.Subcategory,
+               y = ~n,
+               name = paste0("Number of Crime for ", string),
+               type = "bar") %>%
+    layout(title = 'Number of Crime',
+           xaxis = list(title = 'Crime Type'),
+           yaxis = list(title = 'Number of Occurred'))
+  }
+
 
 #-----------------------------------------------------------------------------
 
@@ -147,15 +158,15 @@ server <- function(input, output) {
                           zaxis = list(title = 'Number of Crimes')))
 
   })
-   output$graph <- renderPlotly({a
-     q <- plot_ly(sum_one,
-       x = ~Crime.Subcategory,
-       y = ~n,
-       name = "Number of Crime for *INSERT SEAONS*",
-       type = "bar"
-     )
-   })
-  
+   output$graph <- renderPlotly({
+     result <- switch(input$pie,
+                      pickWinter = make_graph(sum_one, "winter"),
+                      pickSpring = make_graph(sum_two, "spring"),
+                      pickSummer = make_graph(sum_three, "summer"),
+                      pickFall = make_graph(sum_four, "autumn"))})
+     
+     
+   
 }
 
 

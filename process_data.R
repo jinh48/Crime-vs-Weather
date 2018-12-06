@@ -8,6 +8,9 @@ rain <- read.csv("data/rain.csv", header = TRUE, stringsAsFactors = FALSE)
 crime <- filter(crime, grepl('2002|2003|2004|2005|2006|2007|2008|2009|2010|2011|
                              2012|2013|2014|2015|2016|2017', Occurred.Date))
 
+
+
+# ---- DATA FOR 3D PLOT ---- #
 rain_df <- read.csv("data/rain.csv", header = TRUE, stringsAsFactors = FALSE)
 crime_df <- crime <- read.csv("data/crime.csv", header = TRUE, stringsAsFactors = FALSE)
 weather_df <- read.csv("data/weather.csv", header = TRUE, stringsAsFactors = FALSE)
@@ -43,6 +46,35 @@ df <- na.omit(combine_temp)
 write.csv(df, "data/crime_rain.csv", row.names = FALSE)
 
 crime_rain <- read.csv("data/crime_rain.csv", header = TRUE, stringsAsFactors = FALSE)
+
+
+
+
+
+# ----- DATA FOR BAR GRAPHS ----- #
+
+crime_names <- read.csv("data/crime.csv", header = TRUE, stringsAsFactors = FALSE)
+select_names <- crime_names %>% group_by(Crime.Subcategory) %>% select(Occurred.Date, Crime.Subcategory) %>% 
+  summarise(n = n())
+
+crime_names$Occurred.Date <- as.Date(crime_names$Occurred.Date, format = "%m/%d/%Y")
+
+qone <- crime_names[crime_names$Occurred.Date >= "2018-03-01" & crime_names$Occurred.Date <= "2018-05-31",]
+qtwo <- crime_names[crime_names$Occurred.Date >= "2018-06-01" & crime_names$Occurred.Date <= "2018-08-31",]
+qthree <- crime_names[crime_names$Occurred.Date >= "2018-09-01" & crime_names$Occurred.Date <= "2018-11-30",]
+qfour <- crime_names[crime_names$Occurred.Date >= "2018-12-01" | crime_names$Occurred.Date <= "2018-02-28",]
+
+sum_one <- qone %>% group_by(Crime.Subcategory) %>% select(Occurred.Date, Crime.Subcategory) %>% 
+  summarise(n = n())
+sum_two <- qtwo %>% group_by(Crime.Subcategory) %>% select(Occurred.Date, Crime.Subcategory) %>% 
+  summarise(n = n())
+sum_three <- qthree %>% group_by(Crime.Subcategory) %>% select(Occurred.Date, Crime.Subcategory) %>% 
+  summarise(n = n())
+sum_four <- qfour %>% group_by(Crime.Subcategory) %>% select(Occurred.Date, Crime.Subcategory) %>% 
+  summarise(n = n())
+
+quarters <- c(sum_one, sum_two, sum_three, sum_four)
+
 
 
 # ----- MODIFIYING RAIN FILE TO SUIT OUR PROCESSING ------

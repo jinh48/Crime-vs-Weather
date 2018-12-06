@@ -2,6 +2,8 @@ library(shiny)
 library(shinyWidgets)
 library(rsconnect)
 
+
+
 ui <- fluidPage(
   setBackgroundColor(
     color = "#f9f1f1"
@@ -24,6 +26,8 @@ ui <- fluidPage(
                    "Summer" = "pickSummer", "Fall" = "pickFall")), draggable = T, cursor = c("auto",
                                                                                              "move", "default", "inherit")),
                 tags$head(tags$style(HTML(".selectize-input {height: 100px; width: 200px; font-size: 40px;}")))),
+ 
+ 
    # sidebarPanel(
    #   # sliderInput("date", "Date:",
    #   #             min = 0, max = 1000,
@@ -42,7 +46,8 @@ ui <- fluidPage(
       google_mapOutput(outputId = "mapPlot"),
       plotOutput("piePlot"),
       h2(textOutput("text")),
-      plotlyOutput("plot3d")
+      plotlyOutput("plot3d"),
+      plotlyOutput("graph")
     )
   )
 )

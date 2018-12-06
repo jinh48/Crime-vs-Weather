@@ -147,6 +147,14 @@ server <- function(input, output) {
                           zaxis = list(title = 'Number of Crimes')))
 
   })
+   output$graph <- renderPlotly({a
+     q <- plot_ly(sum_one,
+       x = ~Crime.Subcategory,
+       y = ~n,
+       name = "Number of Crime for *INSERT SEAONS*",
+       type = "bar"
+     )
+   })
   
 }
 

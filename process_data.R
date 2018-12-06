@@ -5,6 +5,7 @@ library("tidyr")
 # ***ATTENTION***
 # some sections of this code is commented out because original files that were transformed 
 # into our processing data were too large (2GB + file size). 
+# processing code also took up too much memory on shinyapps, so it ran out of memory. 
 # commented code was left in to show how to transform data 
 # final transformed data was written to csv files
 
@@ -21,41 +22,41 @@ crime <- filter(crime, grepl('2002|2003|2004|2005|2006|2007|2008|2009|2010|2011|
 
 # ---- DATA FOR 3D PLOT ---- #
 
-rain_df <- read.csv("data/rain.csv", header = TRUE, stringsAsFactors = FALSE)
-crime_df <- crime <- read.csv("data/crime.csv", header = TRUE, stringsAsFactors = FALSE)
-weather_df <- read.csv("data/weather.csv", header = TRUE, stringsAsFactors = FALSE)
-
-# turning crime into date
-crime_df$Occurred.Date <- as.Date(crime_df$Occurred.Date, format = "%m/%d/%Y")
-weather_df$Date <- as.Date(weather_df$Date, format = "%m/%d/%Y")
-
-# turn crime into months
-crime_x  <- format(crime_df, format="%m-%Y")
-weather_x <- format(weather_df, format = "%m-%Y")
-
-# group by month and count how many crimes by rows
-crime_monthly <- aggregate(crime_x[,7], list(crime_x$Occurred.Date), FUN = length) %>% as.data.frame()
-
-# change to date column for merge
-names(crime_monthly)[names(crime_monthly) == 'Group.1'] <- 'date'
-
-names(weather_x)[names(weather_x) == 'Date'] <- 'date'
-
-# change rain to date
-rain_df$date <- as.Date(rain_df$date, format = "%m/%d/%Y")
-
-# change rain to month
-rain_x <- format(rain_df, format= "%m-%Y")
-
-# combine rain and crime
-combine_rain_crime <- merge(x = crime_monthly, y = rain_x, by = "date", all.x = TRUE)
-combine_temp <- merge(x = combine_rain_crime, y = weather_x, by = "date", all.x = TRUE)
-
-# Omitting all NA values
-df <- na.omit(combine_temp)
-
-# writing to csv file
-write.csv(df, "data/crime_rain.csv", row.names = FALSE)
+# rain_df <- read.csv("data/rain.csv", header = TRUE, stringsAsFactors = FALSE)
+# crime_df <- crime <- read.csv("data/crime.csv", header = TRUE, stringsAsFactors = FALSE)
+# weather_df <- read.csv("data/weather.csv", header = TRUE, stringsAsFactors = FALSE)
+# 
+# # turning crime into date
+# crime_df$Occurred.Date <- as.Date(crime_df$Occurred.Date, format = "%m/%d/%Y")
+# weather_df$Date <- as.Date(weather_df$Date, format = "%m/%d/%Y")
+# 
+# # turn crime into months
+# crime_x  <- format(crime_df, format="%m-%Y")
+# weather_x <- format(weather_df, format = "%m-%Y")
+# 
+# # group by month and count how many crimes by rows
+# crime_monthly <- aggregate(crime_x[,7], list(crime_x$Occurred.Date), FUN = length) %>% as.data.frame()
+# 
+# # change to date column for merge
+# names(crime_monthly)[names(crime_monthly) == 'Group.1'] <- 'date'
+# 
+# names(weather_x)[names(weather_x) == 'Date'] <- 'date'
+# 
+# # change rain to date
+# rain_df$date <- as.Date(rain_df$date, format = "%m/%d/%Y")
+# 
+# # change rain to month
+# rain_x <- format(rain_df, format= "%m-%Y")
+# 
+# # combine rain and crime
+# combine_rain_crime <- merge(x = crime_monthly, y = rain_x, by = "date", all.x = TRUE)
+# combine_temp <- merge(x = combine_rain_crime, y = weather_x, by = "date", all.x = TRUE)
+# 
+# # Omitting all NA values
+# df <- na.omit(combine_temp)
+# 
+# # writing to csv file
+# write.csv(df, "data/crime_rain.csv", row.names = FALSE)
 
 # reading in data to be used for 3D plot
 crime_rain <- read.csv("data/crime_rain.csv", header = TRUE, stringsAsFactors = FALSE)
@@ -64,28 +65,37 @@ crime_rain <- read.csv("data/crime_rain.csv", header = TRUE, stringsAsFactors = 
 
 # ----- DATA FOR BAR GRAPHS ----- #
 
-# reading in data
-crime_names <- read.csv("data/crime.csv", header = TRUE, stringsAsFactors = FALSE)
+# # reading in data
+# crime_names <- read.csv("data/crime.csv", header = TRUE, stringsAsFactors = FALSE)
+# 
+# # turning the column Occurred.Date into a date value
+# crime_names$Occurred.Date <- as.Date(crime_names$Occurred.Date, format = "%m/%d/%Y")
+# 
+# # filtering out the dates to create the four seasons
+# qone <- crime_names[crime_names$Occurred.Date >= "2018-03-01" & crime_names$Occurred.Date <= "2018-05-31",]
+# qtwo <- crime_names[crime_names$Occurred.Date >= "2018-06-01" & crime_names$Occurred.Date <= "2018-08-31",]
+# qthree <- crime_names[crime_names$Occurred.Date >= "2018-09-01" & crime_names$Occurred.Date <= "2018-11-30",]
+# qfour <- crime_names[crime_names$Occurred.Date >= "2018-12-01" | crime_names$Occurred.Date <= "2018-02-28",]
+# 
+# # group by the crime category, and counts how many for each crime in each season 
+# sum_one <- qone %>% group_by(Crime.Subcategory) %>% select(Occurred.Date, Crime.Subcategory) %>% 
+#   summarise(n = n()) %>% as.data.frame()
+# sum_two <- qtwo %>% group_by(Crime.Subcategory) %>% select(Occurred.Date, Crime.Subcategory) %>% 
+#   summarise(n = n()) %>% as.data.frame()
+# sum_three <- qthree %>% group_by(Crime.Subcategory) %>% select(Occurred.Date, Crime.Subcategory) %>% 
+#   summarise(n = n()) %>% as.data.frame()
+# sum_four <- qfour %>% group_by(Crime.Subcategory) %>% select(Occurred.Date, Crime.Subcategory) %>% 
+#   summarise(n = n()) %>% as.data.frame()
+# 
+# write.csv(sum_one, "data/someone.csv", row.names = FALSE)
+# write.csv(sum_two, "data/sometwo.csv", row.names = FALSE)
+# write.csv(sum_three, "data/somethree.csv", row.names = FALSE)
+# write.csv(sum_four, "data/somefour.csv", row.names = FALSE)
 
-# turning the column Occurred.Date into a date value
-crime_names$Occurred.Date <- as.Date(crime_names$Occurred.Date, format = "%m/%d/%Y")
-
-# filtering out the dates to create the four seasons
-qone <- crime_names[crime_names$Occurred.Date >= "2018-03-01" & crime_names$Occurred.Date <= "2018-05-31",]
-qtwo <- crime_names[crime_names$Occurred.Date >= "2018-06-01" & crime_names$Occurred.Date <= "2018-08-31",]
-qthree <- crime_names[crime_names$Occurred.Date >= "2018-09-01" & crime_names$Occurred.Date <= "2018-11-30",]
-qfour <- crime_names[crime_names$Occurred.Date >= "2018-12-01" | crime_names$Occurred.Date <= "2018-02-28",]
-
-# group by the crime category, and counts how many for each crime in each season 
-sum_one <- qone %>% group_by(Crime.Subcategory) %>% select(Occurred.Date, Crime.Subcategory) %>% 
-  summarise(n = n()) %>% as.data.frame()
-sum_two <- qtwo %>% group_by(Crime.Subcategory) %>% select(Occurred.Date, Crime.Subcategory) %>% 
-  summarise(n = n()) %>% as.data.frame()
-sum_three <- qthree %>% group_by(Crime.Subcategory) %>% select(Occurred.Date, Crime.Subcategory) %>% 
-  summarise(n = n()) %>% as.data.frame()
-sum_four <- qfour %>% group_by(Crime.Subcategory) %>% select(Occurred.Date, Crime.Subcategory) %>% 
-  summarise(n = n()) %>% as.data.frame()
-
+sum_one <- read.csv("data/someone.csv", header = TRUE, stringsAsFactors = FALSE)
+sum_two <- read.csv("data/sometwo.csv", header = TRUE, stringsAsFactors = FALSE)
+sum_three <- read.csv("data/somethree.csv", header = TRUE, stringsAsFactors = FALSE)
+sum_four <- read.csv("data/somefour.csv", header = TRUE, stringsAsFactors = FALSE)
 
 
 # ---- MODIFIYING RAIN FILE TO SUIT OUR PROCESSING ---- #
@@ -124,33 +134,33 @@ sum_four <- qfour %>% group_by(Crime.Subcategory) %>% select(Occurred.Date, Crim
 # rain <- rain %>% mutate(values = as.numeric(values))
 
 # delete the year from all dates
-rain$date <- substring(rain$date, 1, 5)
-# change dates to Date format (automatically changes all years to 2018,
-# so we can select by month & day only)
-rain$date <- as.Date(rain$date, format = "%m/%d")
-# remove na values
-rain <- na.omit(rain)
+# rain$date <- substring(rain$date, 1, 5)
+# # change dates to Date format (automatically changes all years to 2018,
+# # so we can select by month & day only)
+# rain$date <- as.Date(rain$date, format = "%m/%d")
+# # remove na values
+# rain <- na.omit(rain)
 
 # separate data by season
-spring_rain <- rain[rain$date >= "2018-03-01" & rain$date <= "2018-05-31",]
-summer_rain <- rain[rain$date >= "2018-06-01" & rain$date <= "2018-08-31",]
-autumn_rain <- rain[rain$date >= "2018-09-01" & rain$date <= "2018-11-30",]
-winter_rain <- rain[rain$date >= "2018-12-01" | rain$date <= "2018-02-28",]
-
-# grouping the data by location, and finding the mean rainfall for each
-spring_rain_averages <- aggregate(spring_rain, list(spring_rain$lat), mean) %>% as.data.frame()
-summer_rain_averages <- aggregate(summer_rain, list(summer_rain$lat), mean) %>% as.data.frame()
-autumn_rain_averages <- aggregate(autumn_rain, list(autumn_rain$lat), mean) %>% as.data.frame()
-winter_rain_averages <- aggregate(winter_rain, list(winter_rain$lat), mean) %>% as.data.frame()
-# delete unnecessary rows
-spring_rain_averages <- spring_rain_averages[,-1]
-spring_rain_averages <- spring_rain_averages[,-4]
-summer_rain_averages <- summer_rain_averages[,-1]
-summer_rain_averages <- summer_rain_averages[,-4]
-autumn_rain_averages <- autumn_rain_averages[,-1]
-autumn_rain_averages <- autumn_rain_averages[,-4]
-winter_rain_averages <- winter_rain_averages[,-1]
-winter_rain_averages <- winter_rain_averages[,-4]
+# spring_rain <- rain[rain$date >= "2018-03-01" & rain$date <= "2018-05-31",]
+# summer_rain <- rain[rain$date >= "2018-06-01" & rain$date <= "2018-08-31",]
+# autumn_rain <- rain[rain$date >= "2018-09-01" & rain$date <= "2018-11-30",]
+# winter_rain <- rain[rain$date >= "2018-12-01" | rain$date <= "2018-02-28",]
+# 
+# # grouping the data by location, and finding the mean rainfall for each
+# spring_rain_averages <- aggregate(spring_rain, list(spring_rain$lat), mean) %>% as.data.frame()
+# summer_rain_averages <- aggregate(summer_rain, list(summer_rain$lat), mean) %>% as.data.frame()
+# autumn_rain_averages <- aggregate(autumn_rain, list(autumn_rain$lat), mean) %>% as.data.frame()
+# winter_rain_averages <- aggregate(winter_rain, list(winter_rain$lat), mean) %>% as.data.frame()
+# # delete unnecessary rows
+# spring_rain_averages <- spring_rain_averages[,-1]
+# spring_rain_averages <- spring_rain_averages[,-4]
+# summer_rain_averages <- summer_rain_averages[,-1]
+# summer_rain_averages <- summer_rain_averages[,-4]
+# autumn_rain_averages <- autumn_rain_averages[,-1]
+# autumn_rain_averages <- autumn_rain_averages[,-4]
+# winter_rain_averages <- winter_rain_averages[,-1]
+# winter_rain_averages <- winter_rain_averages[,-4]
 
 
 

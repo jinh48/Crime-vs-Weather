@@ -98,12 +98,9 @@ make_pie <- function(df, string, input, output) {
 
 #function to make map
 make_map <- function(string) {
-  df <- eval(as.name(string))
-  df <- df[sample(nrow(df),1000),]
   google_map(data = df) %>%
-    add_circles(lat = "Latitude", lon = "Longitude") %>%
-    add_heatmap(data = eval(as.name(paste0(string, "_rain_averages"))), 
-                lat = "lat", lon = "long", weight = "values", option_radius = 0.05)
+    add_heatmap(data = eval(as.name(string)),
+                lat = "Latitude", lon = "Longitude", option_radius = 0.05)
 }
 
 # ---- Make Bar Charts ---- #

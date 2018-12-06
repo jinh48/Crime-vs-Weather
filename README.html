@@ -149,17 +149,23 @@ $(document).ready(function () {
 </div>
 <div id="where-the-data-comes-from" class="section level2">
 <h2>Where the data comes from:</h2>
-<div id="road-weather-information-stations" class="section level4">
-<h4>Road Weather Information Stations</h4>
-<p>Source: <em><a href="https://data.seattle.gov/Transportation/Road-Weather-Information-Stations/egc4-d24i">data.seattle.gov</a></em></p>
-<p>Data Provided By: <em>Department of Transportation</em></p>
-<p><em>This data is derived from sensor stations placed on bridges and surface streets within city limits. Each station has a temperature sensor that measures the temperature of the street surface and a sensor that measures the ambient air temperature at the station each second. Those values are averaged into temperature readings that are recorded by the station every minute. The dataset is updated every fifteen minutes with new data.</em></p>
-</div>
 <div id="crime-data" class="section level4">
 <h4>Crime Data</h4>
-<p>Source: <em><a href="https://data.seattle.gov/Transportation/Road-Weather-Information-Stations/egc4-d24i">data.seattle.gov</a></em></p>
+<p>Source: <em><a href="https://catalog.data.gov/dataset/crime-data-76bd0">data.seattle.gov</a></em></p>
 <p>Data Provided By: <em>Seattle Police Department</em></p>
-<p><em>This data represents crime reported to the Seattle Police Department (SPD). Each row contains the record of a unique event where at least one criminal offense was reported by a member of the community or detected by an officer in the field…These data contain offenses and offense categorization coded to simulate the standard reported to the FBI under the National Incident Based Reporting System (NIBRS) and used to generate Uniform Crime Report (UCR) summary statistics…Not all offenses are reported here, only the primary offense as determined by the “Hierarchy Rule.”</em></p>
+<p><em>This data represents crime reported to the Seattle Police Department (SPD). Each row contains the record of a unique event where at least one criminal offense was reported by a member of the community or detected by an officer in the field…These data contain offenses and offense categorization coded to simulate the standard reported to the FBI under the National Incident Based Reporting System (NIBRS) and used to generate Uniform Crime Report (UCR) summary statistics…Not all offenses are reported here, only the primary offense as determined by the “Hierarchy Rule.” This data ranges from 1973 to 2018, but we modified the data set to only include 2002 to 2017, to match up with our weather data set.</em></p>
+</div>
+<div id="monthly-rain-gauge-accumulations" class="section level4">
+<h4>Monthly Rain Gauge Accumulations</h4>
+<p>Source: <em><a href="https://data.seattle.gov/City-Business/Observed-Monthly-Rain-Gauge-Accumulations-Oct-2002/rdtp-hzy3">data.seattle.gov</a></em></p>
+<p>Data Provided By: <em>Seattle Public Utilities</em></p>
+<p><em>This data is derived from monthly accumulations for Seattle Public Utility’s rain gauges located throughout Seattle city limits. We located these rain gauges on a map to match up latitude and longitude values with each unique rain gauge station. The data ranges from 2002 to 2017.</em></p>
+</div>
+<div id="road-weather-information-stations-air-temperature" class="section level4">
+<h4>Road Weather Information Stations (Air Temperature)</h4>
+<p>Source: <em><a href="https://data.seattle.gov/Transportation/Road-Weather-Information-Stations/egc4-d24i">data.seattle.gov</a></em></p>
+<p>Data Provided By: <em>Seattle Department of Transportation</em></p>
+<p><em>This data is derived from sensor stations placed on bridges and surface streets within city limits. Each station has a temperature sensor that measures the temperature of the street surface and a sensor that measures the ambient air temperature at the station each second. Those values are averaged into temperature readings that are recorded by the station every minute. The dataset is updated every fifteen minutes with new data. We utilized the Air Temperature column of this data set.</em></p>
 </div>
 </div>
 </div>

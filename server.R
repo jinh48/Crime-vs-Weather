@@ -94,13 +94,13 @@ make_pie <- function(df, string, input, output) {
 }
 
 #-----------------------------------------------------------------------------
-# NEW MAP FXN
 
-#function to make map
+# ---- Make Google Heatmap ---- #
 make_map <- function(string) {
+  df <- eval(as.name(string))
+  df <- df[sample(nrow(df),1000),] # takes random sample of 1000 to lessen computing load
   google_map(data = df) %>%
-    add_heatmap(data = eval(as.name(string)),
-                lat = "Latitude", lon = "Longitude", option_radius = 0.05)
+    add_heatmap(lat = "Latitude", lon = "Longitude", option_radius = 0.05)
 }
 
 # ---- Make Bar Charts ---- #

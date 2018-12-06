@@ -10,20 +10,28 @@ ui <- fluidPage(
   headerPanel(HTML("<center><em>Crime VS Weather</em></center>")),
   titlePanel(HTML("<center>Rachel Kisela, Jin Ning Huang, Nikolai Liang</center>")),
   
-  fixedPanel(
-    selectInput("pie", "Select Season:",
-                c("Winter" = "pickWinter", "Spring" = "pickSpring",
-                  "Summer" = "pickSummer", "Fall" = "pickFall")), draggable = T),
+  # fixedPanel(
+  #   selectInput("pie", "Select Season:",
+  #               c("Winter" = "pickWinter", "Spring" = "pickSpring",
+  #                 "Summer" = "pickSummer", "Fall" = "pickFall")), draggable = T, cursor = c("auto",
+  #                                                                                           "move", "default", "inherit")),
   
   
  sidebarLayout(
-   sidebarPanel(
-     # sliderInput("date", "Date:",
-     #             min = 0, max = 1000,
-     #             value = 0),
-     selectInput("pie", "Select Season:",
-       c("Winter" = "pickWinter", "Spring" = "pickSpring",
-        "Summer" = "pickSummer", "Fall" = "pickFall"))),
+   sidebarPanel(fixedPanel(
+     selectInput("pie", h4("Select Season:"), width = "80%",
+                 c("Winter" = "pickWinter", "Spring" = "pickSpring",
+                   "Summer" = "pickSummer", "Fall" = "pickFall")), draggable = T, cursor = c("auto",
+                                                                                             "move", "default", "inherit")),
+                tags$head(tags$style(HTML(".selectize-input {height: 100px; width: 200px; font-size: 40px;}")))),
+   # sidebarPanel(
+   #   # sliderInput("date", "Date:",
+   #   #             min = 0, max = 1000,
+   #   #             value = 0),
+   #   selectInput("pie", "Select Season:",
+   #     c("Winter" = "pickWinter", "Spring" = "pickSpring",
+   #      "Summer" = "pickSummer", "Fall" = "pickFall"))),
+
     mainPanel(
       h4("The link between crime and precipitation is 
          almost ubiquitously agreed upon in the world of criminology. 

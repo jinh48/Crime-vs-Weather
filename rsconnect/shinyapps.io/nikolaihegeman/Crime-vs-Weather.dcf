@@ -5,8 +5,8 @@ account: nikolaihegeman
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 605735
-bundleId: 1744927
+bundleId: 1744983
 url: https://nikolaihegeman.shinyapps.io/Crime-vs-Weather/
-when: 1544077787.29395
+when: 1544079730.85652
 asMultiple: FALSE
 asStatic: FALSE

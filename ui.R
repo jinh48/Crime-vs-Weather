@@ -1,7 +1,17 @@
 # library packages to use
 library(shiny)
 library(shinyWidgets)
-library(rsconnect)
+library(plotly)
+library(dplyr)
+library(lubridate)
+library(ggplot2)
+library(ggmap)
+library(data.table)
+library(ggrepel)
+library(maps)
+library(mapdata)
+library(googleway)
+
 
 
 # creating the ui 
